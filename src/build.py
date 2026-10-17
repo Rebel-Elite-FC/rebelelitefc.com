@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw, ImageOps
 
 MODE = sys.argv[1] if len(sys.argv) > 1 else "site"
 PREVIEW = "preview" in sys.argv[2:]
+BASE = "/rebelelitefc.com" if PREVIEW else ""   # GitHub project-pages subpath for the preview
 HERE = Path(__file__).parent
 OUT = HERE / "out" / MODE
 CACHE = HERE / ".imgcache"; CACHE.mkdir(exist_ok=True)
@@ -204,7 +205,13 @@ def page(key, title, desc, body, current=None, ld=None, robots="index,follow"):
 <script>{SITE_JS}</script>
 </body>
 </html>"""
-    REGISTRY.append((key, doc))
+    REGISTRY.append((key, rebase(doc)))
+
+def rebase(html):
+    if not BASE: return html
+    html = re.sub(r'((?:href|src)=")/(?!/)', r'\1' + BASE + '/', html)
+    html = re.sub(r'(srcset="[^"]*)', lambda m: m.group(1).replace(' /img/', ' ' + BASE + '/img/').replace('="/img/', '="' + BASE + '/img/'), html)
+    return html
 
 def crumbs(items):
     li = "".join(f'<li><a href="{k}">{esc(l)}</a></li>' if n < len(items) - 1 else f'<li aria-current="page">{esc(l)}</li>' for n, (k, l) in enumerate(items))
@@ -359,6 +366,7 @@ REDIRECTS = {
 }
 def redirect(to):
     canon = to if to.startswith("http") else DOMAIN + to.split("#")[0]
+    if not to.startswith("http"): to = BASE + to
     return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>{NAME}</title><meta name="robots" content="noindex"><link rel="canonical" href="{canon}"><meta http-equiv="refresh" content="0; url={to}"><script>location.replace({json.dumps(to)})</script></head><body><a href="{to}">Continue</a></body></html>'
 
 # ---------------------------------------------------------------- write
@@ -379,7 +387,7 @@ d = ImageDraw.Draw(og, "RGBA"); d.rectangle((0, 0, 1200, 630), fill=(11, 11, 15,
 logo = Image.open(IMG / "re-logo-light.png").convert("RGBA"); logo = logo.resize((720, round(logo.height * 720 / logo.width)), Image.LANCZOS)
 og.paste(logo, ((1200 - logo.width) // 2, (630 - logo.height) // 2), logo); og.save(OUT / "assets/og.jpg", quality=86)
 nf = [d for k, d in REGISTRY if k == "/"][0]
-(OUT / "404.html").write_text(re.sub(r'(?s)<main id="main">.*</main>', '<main id="main"><section class="phead"><div class="wrap phead-in"><p class="kicker">404</p><h1>That page went out of bounds.</h1><p class="lead">It may have moved when we rebuilt the site.</p><p><a class="btn btn-pink" href="/">Home</a> <a class="btn btn-line" href="/tryouts/">Tryouts</a></p></div></section></main>', nf).replace('<meta name="robots" content="index,follow">', '<meta name="robots" content="noindex">'))
+(OUT / "404.html").write_text(rebase(re.sub(r'(?s)<main id="main">.*</main>', '<main id="main"><section class="phead"><div class="wrap phead-in"><p class="kicker">404</p><h1>That page went out of bounds.</h1><p class="lead">It may have moved when we rebuilt the site.</p><p><a class="btn btn-pink" href="/">Home</a> <a class="btn btn-line" href="/tryouts/">Tryouts</a></p></div></section></main>', nf).replace('<meta name="robots" content="index,follow">', '<meta name="robots" content="noindex">')))
 today = datetime.date.today().isoformat()
 urls = [k for k, _ in REGISTRY if k not in ("/privacy-policy/",)]
 (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{DOMAIN}{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n")
