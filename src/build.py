@@ -34,7 +34,6 @@ FEES_URL = "https://ignitefc.com/2026-2027-club-fees/"
 STORE_KIT = "https://www.soccer.com/club/#/2001546044/required"
 STORE_FAN = "https://www.soccer.com/club/#/2001546044/fanwear"
 ZCC = "https://www.zionchampionscup.com/"
-VIDEO_ID = "3-3tjU5onfw"
 SPONSOR_URL = f"mailto:{EMAIL}?subject=Sponsoring%20Rebel%20Elite%20FC"   # [CONFIRM] swap for Typeform/Stripe link
 FIELDS_TRAIN = "Sullivan Soccer Complex and Little Valley Soccer Complex"
 FIELDS_TRYOUT = "Sullivan Soccer Complex"
@@ -167,7 +166,6 @@ LD_ORG = {"@context": "https://schema.org", "@type": "SportsOrganization", "@id"
           "description": "Girls' competitive club soccer (U8–U19) in St. George, Utah — the girls' program of Ignite FC. Two-time Presidents Cup national champions."}
 
 SITE_JS = """(function(){var b=document.querySelector('.burger'),m=document.getElementById('menu');if(b&&m){b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',!o);m.hidden=o;document.body.classList.toggle('menu-open',!o)})}
-document.querySelectorAll('.video').forEach(function(v){v.addEventListener('click',function(){var id=v.getAttribute('data-id');v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" title="Rebel Elite FC highlights" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';v.classList.add('on')},{once:true})});
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -10% 0px'});document.querySelectorAll('.rv').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')})}})();"""
 
 CSS_V = hashlib.md5((HERE / "site.css").read_bytes()).hexdigest()[:8]
@@ -257,7 +255,7 @@ def home():
 <p>Rebel Elite started so St. George girls didn't have to drive to Las Vegas or Salt Lake for elite soccer. Today our teams win state titles every January and have brought two national championships home to Southern Utah — with coaches who know every player by name and push each one to get better every week.</p>
 <ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper-specific training included</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Club fee of $195 — tournaments chosen by each team</li></ul>
 <a class="btn btn-line" href="/about/">Our story{I['arrow']}</a></div>
-<figure class="video rv" data-id="{VIDEO_ID}" role="button" tabindex="0" aria-label="Play Rebel Elite FC highlight video">{pic('re-rebel.jpg', 'Rebel Elite FC team with Presidents Cup medals', '(max-width:900px) 100vw, 560px', crop=(16, 9), maxw=1200)}<span class="play">{I['play']}</span></figure>
+<figure class="rv">{pic('re-rebel.jpg', 'Rebel Elite FC team with Presidents Cup medals', '(max-width:900px) 100vw, 560px', crop=(4, 3), maxw=1200)}</figure>
 </div></section>
 
 <section class="sec dark" id="teams"><div class="wrap"><p class="kicker">Age groups</p><h2>Girls' teams, U8 to U19.</h2><p class="lead">Find your player's age group for the {SEASON} season — now aligned to school year (August 1 cutoff).</p><div class="team-grid">{teams}</div></div></section>
@@ -349,7 +347,7 @@ def legal_pages():
     head, ld = pagehead([("/", "Home"), ("/privacy-policy/", "Privacy Policy")], "Legal", "Privacy policy")
     body = head + f"""<section class="sec"><div class="wrap narrow prose"><p>Effective {datetime.date.today():%B %d, %Y}.</p>
 <p>Rebel Elite FC (Ignite FC LLC, "we") operates rebelelitefc.com. This website does not collect personal information directly. Tryout registration is handled by Ollie Sports and kit orders by soccer.com under their own privacy policies, and email you send us is used only to respond to you.</p>
-<p>We do not sell personal information. Embedded content (YouTube, Google Maps) may set cookies governed by those providers. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></section>"""
+<p>We do not sell personal information. Embedded content (Google Maps) may set cookies governed by those providers. Questions: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></section>"""
     page("/privacy-policy/", "Privacy Policy | Rebel Elite FC", "Rebel Elite FC privacy policy.", body, None, [ld], robots="noindex,follow")
 
 def sitemap_page():
