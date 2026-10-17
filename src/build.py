@@ -23,7 +23,7 @@ IMG = HERE / "img"
 NAME = "Rebel Elite FC"
 DOMAIN = "https://rebelelitefc.com"
 CITY, STATE = "St. George", "UT"
-PHONE, TEL = "435-680-9777", "+14356809777"
+CONTACT_FORM = "https://ignitefc.com/contact/"
 EMAIL = "soccer@rebelelitefc.com"
 FACEBOOK = "https://www.facebook.com/ignitefcutah"
 INSTAGRAM = "https://www.instagram.com/rebelelitefc/"
@@ -147,7 +147,7 @@ def header(current):
 <a class="btn btn-pink top-cta" href="/tryouts/">Tryouts{I['arrow']}</a>
 <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div></header>
-<div class="menu-panel" id="menu" hidden><nav aria-label="Mobile">{links}<a href="{TRYOUTS_URL}" rel="noopener" class="btn btn-pink">Register for Tryouts</a><a href="tel:{TEL}" class="btn btn-line">{PHONE}</a></nav></div>"""
+<div class="menu-panel" id="menu" hidden><nav aria-label="Mobile">{links}<a href="{TRYOUTS_URL}" rel="noopener" class="btn btn-pink">Register for Tryouts</a><a href="mailto:{EMAIL}" class="btn btn-line">Email us</a></nav></div>"""
 
 def footer():
     return f"""<footer class="foot"><div class="wrap foot-grid">
@@ -155,11 +155,11 @@ def footer():
 <p class="soc"><a href="{INSTAGRAM}" rel="noopener" aria-label="Instagram">{I['ig']}</a><a href="{FACEBOOK}" rel="noopener" aria-label="Facebook">{I['fb']}</a><a href="{YOUTUBE}" rel="noopener" aria-label="YouTube">{I['yt']}</a></p></div>
 <div><h3>Club</h3>{"".join(f'<a href="{k}">{l}</a>' for k, l in NAV if not k.startswith("http"))}<a href="{IGNITE}" rel="noopener">Ignite FC (boys)</a></div>
 <div><h3>Players</h3><a href="{TRYOUTS_URL}" rel="noopener">Tryout registration</a><a href="/tryouts/#faq">Tryout FAQ</a><a href="/teams/#age-chart">Age group chart</a><a href="{STORE_KIT}" rel="noopener">Rebel kit (soccer.com)</a><a href="{STORE_FAN}" rel="noopener">Fan store</a><a href="{ZCC}" rel="noopener">Zion Champions Cup</a></div>
-<div><h3>Contact</h3><a href="tel:{TEL}">{PHONE}</a><a href="mailto:{EMAIL}">{EMAIL}</a><span>{FIELDS_TRYOUT}<br>{CITY}, {STATE}</span></div>
+<div><h3>Contact</h3><a href="mailto:{EMAIL}">{EMAIL}</a><a href="{CONTACT_FORM}" rel="noopener">Ignite FC contact form</a><span>{FIELDS_TRYOUT}<br>{CITY}, {STATE}</span></div>
 </div><div class="wrap foot-base"><span>© {YEAR} Ignite FC LLC, DBA Rebel Elite. All rights reserved.</span><span><a href="/privacy-policy/">Privacy</a><a href="/sitemap/">Sitemap</a></span></div></footer>"""
 
 LD_ORG = {"@context": "https://schema.org", "@type": "SportsOrganization", "@id": DOMAIN + "/#org", "name": NAME, "alternateName": ["Rebel Elite", "Ignite FC Rebel Elite"], "sport": "Soccer", "url": DOMAIN,
-          "logo": DOMAIN + "/assets/logo.png", "telephone": TEL, "email": EMAIL, "sameAs": [FACEBOOK, INSTAGRAM, YOUTUBE, IGNITE], "parentOrganization": {"@type": "SportsOrganization", "name": "Ignite FC", "url": IGNITE},
+          "logo": DOMAIN + "/assets/logo.png", "email": EMAIL, "sameAs": [FACEBOOK, INSTAGRAM, YOUTUBE, IGNITE], "parentOrganization": {"@type": "SportsOrganization", "name": "Ignite FC", "url": IGNITE},
           "foundingDate": "2018", "memberOf": [{"@type": "Organization", "name": "Utah Youth Soccer Association"}, {"@type": "Organization", "name": "US Club Soccer"}],
           "address": {"@type": "PostalAddress", "addressLocality": CITY, "addressRegion": STATE, "addressCountry": "US"},
           "areaServed": ["St. George, UT", "Washington County, UT", "Southern Utah", "Mesquite, NV"],
@@ -222,7 +222,7 @@ def pagehead(items, kicker, h1, sub="", photo=None, alt="", top=0.3):
     return f"""<section class="phead{' has-bg' if photo else ''}">{bg}<div class="wrap phead-in">{c}<p class="kicker">{esc(kicker)}</p><h1>{esc(h1)}</h1>{f'<p class="lead">{esc(sub)}</p>' if sub else ''}</div></section>""", ld
 
 def cta_band(h="Ready to play for Rebel Elite?", p="Girls U8–U19 in St. George. Tryouts every June — evaluations year-round.", btn="Register for Tryouts", href=TRYOUTS_URL):
-    return f"""<section class="band rv"><div class="wrap band-in"><div><h2>{esc(h)}</h2><p>{esc(p)}</p></div><div class="band-acts"><a class="btn btn-pink btn-lg" href="{href}" rel="noopener">{esc(btn)}{I['arrow']}</a><a class="btn btn-ghost" href="tel:{TEL}">{I['phone']}{PHONE}</a></div></div></section>"""
+    return f"""<section class="band rv"><div class="wrap band-in"><div><h2>{esc(h)}</h2><p>{esc(p)}</p></div><div class="band-acts"><a class="btn btn-pink btn-lg" href="{href}" rel="noopener">{esc(btn)}{I['arrow']}</a><a class="btn btn-ghost" href="mailto:{EMAIL}">{I['mail']}Email us</a></div></div></section>"""
 
 def faq_block(items, idp="faq", kicker="Questions", h="Frequently asked"):
     html = "".join(f'<details class="faq"{" open" if n == 0 else ""}><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for n, (q, a) in enumerate(items))
@@ -304,7 +304,7 @@ def tryouts_page():
 <div class="rv"><p class="kicker">How it works</p><h2>Three steps to a Rebel jersey.</h2>
 <ol class="steps"><li><strong>Register online.</strong> Registration runs through Ollie Sports and takes about three minutes. It opens each spring; UYSA rules keep every Utah club's tryouts in the same early-June window.</li><li><strong>Come to tryouts.</strong> Bring water, a ball, cleats, and shin guards. Sessions run by age group at {FIELDS_TRYOUT} — arrive 15–20 minutes early for check-in.</li><li><strong>Get your offer.</strong> Coaches contact families within a few days of the final session with team placement and next steps.</li></ol>
 <a class="btn btn-pink btn-lg" href="{TRYOUTS_URL}" rel="noopener">Register on Ollie{I['arrow']}</a></div>
-<aside class="card rv"><h3>Tryout details</h3><dl class="meta"><div><dt>Who</dt><dd>Girls U8–U19 (born 2007–2018)</dd></div><div><dt>Where</dt><dd>{FIELDS_TRYOUT}, St. George, UT</dd></div><div><dt>When</dt><dd>First week of June each year; times by age group posted each spring</dd></div><div><dt>Cost</dt><dd>Tryouts are free</dd></div><div><dt>Missed it?</dt><dd>Year-round evaluations when rosters have room</dd></div><div><dt>Questions</dt><dd><a href="tel:{TEL}">{PHONE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></dd></div></dl></aside>
+<aside class="card rv"><h3>Tryout details</h3><dl class="meta"><div><dt>Who</dt><dd>Girls U8–U19 (born 2007–2018)</dd></div><div><dt>Where</dt><dd>{FIELDS_TRYOUT}, St. George, UT</dd></div><div><dt>When</dt><dd>First week of June each year; times by age group posted each spring</dd></div><div><dt>Cost</dt><dd>Tryouts are free</dd></div><div><dt>Missed it?</dt><dd>Year-round evaluations when rosters have room</dd></div><div><dt>Questions</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div></dl></aside>
 </div></section>
 <section class="sec dark" id="fees"><div class="wrap split"><div class="rv"><p class="kicker">What it costs</p><h2>Straightforward fees. No surprises.</h2><p>Rebel Elite is run by volunteer board members and coaches, so the club fee stays low and every team controls its own tournament budget. The current season's fee sheet is published on ignitefc.com before tryouts.</p><a class="btn btn-ghost" href="{FEES_URL}" rel="noopener">Current fee sheet{I['arrow']}</a></div>
 <div class="fees rv"><div><strong>Club fee</strong><span>Per player, per season<br><small>Covers coaching, club administration and fields, plus a team equipment fund</small></span></div><div><strong>UYSA</strong><span>League registration<br><small>Paid directly to Utah Youth Soccer; varies by age</small></span></div><div><strong>Kit</strong><span>adidas Rebel uniform<br><small>Home &amp; away jerseys, socks and training top · ordered on <a href="{STORE_KIT}" rel="noopener">soccer.com</a></small></span></div><div><strong>Tournaments</strong><span>Chosen by each team<br><small>Funded by the team and often offset by local sponsors</small></span></div></div></div></section>
@@ -338,10 +338,10 @@ def contact_page():
     head, ld = pagehead([("/", "Home"), ("/contact/", "Contact")], "Contact", "Get in touch.", "Tryouts, evaluations, sponsorships, or just a question — we answer every message.")
     body = head + f"""
 <section class="sec"><div class="wrap split">
-<div class="rv"><div class="contact-list"><a href="tel:{TEL}">{I['phone']}<span><strong>Call or text</strong>{PHONE}</span></a><a href="mailto:{EMAIL}">{I['mail']}<span><strong>Email</strong>{EMAIL}</span></a><a href="https://www.google.com/maps/search/?api=1&query=Sullivan+Soccer+Complex+St+George+UT" rel="noopener">{I['pin']}<span><strong>Tryouts &amp; training</strong>{FIELDS_TRYOUT} · Little Valley, {CITY}, {STATE}</span></a><a href="{INSTAGRAM}" rel="noopener">{I['ig']}<span><strong>Instagram</strong>@rebelelitefc</span></a></div></div>
+<div class="rv"><div class="contact-list"><a href="mailto:{EMAIL}">{I['mail']}<span><strong>Email</strong>{EMAIL}</span></a><a href="{CONTACT_FORM}" rel="noopener">{I['arrow']}<span><strong>Club contact form</strong>ignitefc.com/contact</span></a><a href="https://www.google.com/maps/search/?api=1&query=Sullivan+Soccer+Complex+St+George+UT" rel="noopener">{I['pin']}<span><strong>Tryouts &amp; training</strong>{FIELDS_TRYOUT} · Little Valley, {CITY}, {STATE}</span></a><a href="{INSTAGRAM}" rel="noopener">{I['ig']}<span><strong>Instagram</strong>@rebelelitefc</span></a></div></div>
 <aside class="card rv"><h3>Quick links</h3><a class="btn btn-pink" href="{TRYOUTS_URL}" rel="noopener">Register for Tryouts{I['arrow']}</a><a class="btn btn-line" href="mailto:{EMAIL}?subject=Player%20evaluation">Request an evaluation</a><a class="btn btn-line" href="mailto:{EMAIL}?subject=Sponsoring%20Rebel%20Elite%20FC">Sponsor a team</a><a class="btn btn-line" href="{STORE_KIT}" rel="noopener">Order the Rebel kit</a></aside></div></section>
 <section class="map"><iframe title="Sullivan Soccer Complex map" src="https://www.google.com/maps?q=Sullivan+Soccer+Complex,+St.+George,+UT&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></section>"""
-    page("/contact/", "Contact Rebel Elite FC | St. George, Utah Girls' Soccer Club", f"Contact Rebel Elite FC girls' soccer club in St. George, Utah: call or text {PHONE}, email {EMAIL}, or find us at {FIELDS_TRYOUT}.", body, "/contact/", [ld])
+    page("/contact/", "Contact Rebel Elite FC | St. George, Utah Girls' Soccer Club", f"Contact Rebel Elite FC girls' soccer club in St. George, Utah: email {EMAIL}, use the Ignite FC contact form, or find us at {FIELDS_TRYOUT}.", body, "/contact/", [ld])
 
 def legal_pages():
     head, ld = pagehead([("/", "Home"), ("/privacy-policy/", "Privacy Policy")], "Legal", "Privacy policy")
