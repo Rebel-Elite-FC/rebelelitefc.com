@@ -88,7 +88,7 @@ FAQ_TRYOUTS = [
     ("Where are tryouts held?", f"At {FIELDS_TRYOUT} in St. George. Arrive 15–20 minutes before your first session for check-in."),
     ("Who can try out?", "Girls U8 through U19. No prior club experience is required for our younger age groups. U8 players may play up with U9."),
     ("What should my player bring?", "Water, a ball, cleats, and shin guards. Attend every session you can — more time in front of the coaches is better, but one night is welcome."),
-    ("What does it cost to play?", f"The {SEASON} club fee is $195 per player ($163 for high-school players who play only one of the two seasons) and covers coaching, administration, and fields, with $40 of it going to a team equipment fund. UYSA registration ($220–$280) and the adidas Rebel kit (about $197 youth / $214 adult, replaced every two years) are paid separately, and teams fund their own tournaments."),
+    ("What does it cost to play?", "Club fees are set each season and kept as low as possible; UYSA registration and the adidas Rebel kit are paid separately, and each team chooses and funds its own tournaments. The current fee sheet is posted on ignitefc.com before tryouts."),
     ("Which age group is my daughter in?", "Starting with the 2026-27 season, UYSA uses a school-year alignment with an August 1 cutoff: players born January–July are in one age group and players born August–December in the next younger group. See the chart on our Teams page."),
     ("Where do teams train and play?", f"Practices are usually two nights a week at {FIELDS_TRAIN}. League games run in a fall season and a spring season (8–15 games each), usually one night a week, mostly at the {FIELDS_GAMES}."),
     ("We're from out of town. Can we still try out?", "Yes. Email us your player's name and birthdate and we'll connect you with the right coach or arrange another option."),
@@ -154,7 +154,7 @@ def footer():
 <div class="foot-brand">{pic('re-logo-light.png', NAME, '200px', maxw=600)}<p>Rebel Elite FC is the girls' program of <a href="{IGNITE}" rel="noopener">Ignite FC</a> — competitive club soccer in St. George, Utah for ages U8–U19.</p>
 <p class="soc"><a href="{INSTAGRAM}" rel="noopener" aria-label="Instagram">{I['ig']}</a><a href="{FACEBOOK}" rel="noopener" aria-label="Facebook">{I['fb']}</a><a href="{YOUTUBE}" rel="noopener" aria-label="YouTube">{I['yt']}</a></p></div>
 <div><h3>Club</h3>{"".join(f'<a href="{k}">{l}</a>' for k, l in NAV if not k.startswith("http"))}<a href="{IGNITE}" rel="noopener">Ignite FC (boys)</a></div>
-<div><h3>Players</h3><a href="{TRYOUTS_URL}" rel="noopener">Tryout registration</a><a href="/tryouts/#faq">Fees &amp; FAQ</a><a href="/teams/#age-chart">Age group chart</a><a href="{STORE_KIT}" rel="noopener">Rebel kit (soccer.com)</a><a href="{STORE_FAN}" rel="noopener">Fan store</a><a href="{ZCC}" rel="noopener">Zion Champions Cup</a></div>
+<div><h3>Players</h3><a href="{TRYOUTS_URL}" rel="noopener">Tryout registration</a><a href="/tryouts/#faq">Tryout FAQ</a><a href="/teams/#age-chart">Age group chart</a><a href="{STORE_KIT}" rel="noopener">Rebel kit (soccer.com)</a><a href="{STORE_FAN}" rel="noopener">Fan store</a><a href="{ZCC}" rel="noopener">Zion Champions Cup</a></div>
 <div><h3>Contact</h3><a href="tel:{TEL}">{PHONE}</a><a href="mailto:{EMAIL}">{EMAIL}</a><span>{FIELDS_TRYOUT}<br>{CITY}, {STATE}</span></div>
 </div><div class="wrap foot-base"><span>© {YEAR} Ignite FC LLC, DBA Rebel Elite. All rights reserved.</span><span><a href="/privacy-policy/">Privacy</a><a href="/sitemap/">Sitemap</a></span></div></footer>"""
 
@@ -246,14 +246,14 @@ def home():
 <div class="wrap hero-in"><p class="kicker">Girls' competitive club soccer · St. George, Utah</p>
 <h1>Building individual <em>character</em> through girls' soccer in Southern Utah.</h1>
 <p class="lead">Rebel Elite FC is the girls' program of Ignite FC — two-time Presidents Cup national champions, 24 teams from U8 to U19, and a pathway from Little Valley to college soccer.</p>
-<div class="hero-acts"><a class="btn btn-pink btn-lg" href="/tryouts/">Tryouts &amp; fees{I['arrow']}</a><a class="btn btn-ghost btn-lg" href="/teams/">Find your age group</a></div></div></section>
+<div class="hero-acts"><a class="btn btn-pink btn-lg" href="/tryouts/">Tryouts{I['arrow']}</a><a class="btn btn-ghost btn-lg" href="/teams/">Find your age group</a></div></div></section>
 
 <section class="stats"><div class="wrap stats-in">{stats}</div></section>
 
 <section class="sec"><div class="wrap split">
 <div class="rv"><p class="kicker">Why Rebel Elite</p><h2>Hometown club. National standard.</h2>
 <p>Rebel Elite started so St. George girls didn't have to drive to Las Vegas or Salt Lake for elite soccer. Today our teams win state titles every January and have brought two national championships home to Southern Utah — with coaches who know every player by name and push each one to get better every week.</p>
-<ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper-specific training included</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Club fee of $195 — tournaments chosen by each team</li></ul>
+<ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper-specific training included</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Volunteer-run club — low fees, tournaments chosen by each team</li></ul>
 <a class="btn btn-line" href="/about/">Our story{I['arrow']}</a></div>
 <figure class="rv">{pic('re-rebel.jpg', 'Rebel Elite FC team with Presidents Cup medals', '(max-width:900px) 100vw, 560px', crop=(4, 3), maxw=1200)}</figure>
 </div></section>
@@ -285,7 +285,7 @@ def teams_page():
 <h3 class="h-small">{SEASON} teams</h3>{teams_for(ranges[s])}
 <p class="small">Coaches for each team are announced after tryouts. Contact the club for your team's coach.</p>
 <dl class="meta"><div><dt>Training</dt><dd>Usually two nights a week · {FIELDS_TRAIN}</dd></div><div><dt>Games</dt><dd>Fall &amp; spring UYSA seasons, 8–15 games each · mostly at the {FIELDS_GAMES}</dd></div></dl>
-<a class="btn btn-pink" href="/tryouts/">Tryouts &amp; fees{I['arrow']}</a></div></article>""" for s, lbl, yrs, st, b in STAGES)
+<a class="btn btn-pink" href="/tryouts/">Tryouts{I['arrow']}</a></div></article>""" for s, lbl, yrs, st, b in STAGES)
     alumni = '<ul class="roster">' + "".join(f'<li><strong>Rebel Elite {y} {c}</strong></li>' for y, c in ALUMNI_TEAMS) + "</ul>"
     faq, fld = faq_block([("Which team will my daughter be placed on?", "Placement is by age group first, then by tryout evaluation. Black is typically the top team in an age group, followed by White and Pink. Players may be invited to play up when it is right for their development."),
                           ("Can teams play across age groups?", "Under the new school-year alignment, teams are not forced to split, but most players will play in the older of two possible groups. Play-down exceptions are reviewed case by case and granted for one year only."),
@@ -306,10 +306,10 @@ def tryouts_page():
 <a class="btn btn-pink btn-lg" href="{TRYOUTS_URL}" rel="noopener">Register on Ollie{I['arrow']}</a></div>
 <aside class="card rv"><h3>Tryout details</h3><dl class="meta"><div><dt>Who</dt><dd>Girls U8–U19 (born 2007–2018)</dd></div><div><dt>Where</dt><dd>{FIELDS_TRYOUT}, St. George, UT</dd></div><div><dt>When</dt><dd>First week of June each year; times by age group posted each spring</dd></div><div><dt>Cost</dt><dd>Tryouts are free</dd></div><div><dt>Missed it?</dt><dd>Year-round evaluations when rosters have room</dd></div><div><dt>Questions</dt><dd><a href="tel:{TEL}">{PHONE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></dd></div></dl></aside>
 </div></section>
-<section class="sec dark" id="fees"><div class="wrap split"><div class="rv"><p class="kicker">What it costs</p><h2>Straightforward fees. No surprises.</h2><p>Rebel Elite is run by volunteer board members and coaches, so the club fee stays low and every team controls its own tournament budget.</p><a class="btn btn-ghost" href="{FEES_URL}" rel="noopener">Full {SEASON} fee sheet{I['arrow']}</a></div>
-<div class="fees rv"><div><strong>$195</strong><span>Club fee per player<br><small>$163 for high-school players playing one season · includes $40 team equipment fund</small></span></div><div><strong>$220–280</strong><span>UYSA registration<br><small>Paid directly to UYSA; varies by age</small></span></div><div><strong>$197 / $214</strong><span>adidas Rebel kit (youth / adult)<br><small>2 jerseys, 2 socks, training top · replaced every two years · <a href="{STORE_KIT}" rel="noopener">soccer.com</a></small></span></div><div><strong>Varies</strong><span>Tournaments &amp; travel<br><small>Chosen and funded by each team · often offset by local sponsors</small></span></div></div></div></section>
+<section class="sec dark" id="fees"><div class="wrap split"><div class="rv"><p class="kicker">What it costs</p><h2>Straightforward fees. No surprises.</h2><p>Rebel Elite is run by volunteer board members and coaches, so the club fee stays low and every team controls its own tournament budget. The current season's fee sheet is published on ignitefc.com before tryouts.</p><a class="btn btn-ghost" href="{FEES_URL}" rel="noopener">Current fee sheet{I['arrow']}</a></div>
+<div class="fees rv"><div><strong>Club fee</strong><span>Per player, per season<br><small>Covers coaching, club administration and fields, plus a team equipment fund</small></span></div><div><strong>UYSA</strong><span>League registration<br><small>Paid directly to Utah Youth Soccer; varies by age</small></span></div><div><strong>Kit</strong><span>adidas Rebel uniform<br><small>Home &amp; away jerseys, socks and training top · ordered on <a href="{STORE_KIT}" rel="noopener">soccer.com</a></small></span></div><div><strong>Tournaments</strong><span>Chosen by each team<br><small>Funded by the team and often offset by local sponsors</small></span></div></div></div></section>
 <section class="sec"><div class="wrap narrow rv"><p class="kicker">Missed tryouts?</p><h2>We evaluate players year-round.</h2><p>Rosters have room more often than you'd think, especially in younger age groups. Email us your player's birth year and experience and we'll set up a training evaluation with the right team. Out of town? Send a name and birthdate and we'll connect you with a coach.</p><a class="btn btn-pink" href="mailto:{EMAIL}?subject=Player%20evaluation">Request an evaluation{I['arrow']}</a></div></section>""" + faq + cta_band()
-    page("/tryouts/", f"Girls' Soccer Tryouts & Club Fees, St. George Utah | Rebel Elite FC {SEASON}", f"Rebel Elite FC girls' soccer tryouts in St. George, Utah: ages U8–U19, held each June at Sullivan Soccer Complex, free to attend. {SEASON} club fees, kit, and year-round evaluations.",
+    page("/tryouts/", f"Girls' Soccer Tryouts, St. George Utah | Rebel Elite FC {SEASON}", f"Rebel Elite FC girls' soccer tryouts in St. George, Utah: ages U8–U19, held each June at Sullivan Soccer Complex, free to attend. What to bring, what it covers, and year-round evaluations.",
          body, "/tryouts/", [ld, fld])
 
 
