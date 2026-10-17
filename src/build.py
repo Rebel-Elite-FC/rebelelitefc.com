@@ -255,7 +255,7 @@ def home():
 <p>Rebel Elite started so St. George girls didn't have to drive to Las Vegas or Salt Lake for elite soccer. Today our teams win state titles every January and have brought two national championships home to Southern Utah — with coaches who know every player by name and push each one to get better every week.</p>
 <ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper-specific training included</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Volunteer-run club — low fees, tournaments chosen by each team</li></ul>
 <a class="btn btn-line" href="/about/">Our story{I['arrow']}</a></div>
-<figure class="rv">{pic('re-rebel.jpg', 'Rebel Elite FC team with Presidents Cup medals', '(max-width:900px) 100vw, 560px', crop=(4, 3), maxw=1200)}</figure>
+<figure class="rv tall">{pic('trophy-2015-albion.jpg', 'Rebel Elite 2015 lifting the Las Vegas Albion Memorial Cup trophy', '(max-width:900px) 100vw, 480px', crop=(4, 5), maxw=900, top=0.25)}</figure>
 </div></section>
 
 <section class="sec dark" id="teams"><div class="wrap"><p class="kicker">Age groups</p><h2>Girls' teams, U8 to U19.</h2><p class="lead">Find your player's age group for the {SEASON} season — now aligned to school year (August 1 cutoff).</p><div class="team-grid">{teams}</div></div></section>
