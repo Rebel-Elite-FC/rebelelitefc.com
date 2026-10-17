@@ -242,7 +242,7 @@ def home():
     stats = "".join(f'<div class="stat rv"><strong>{esc(n)}</strong><span>{esc(l)}</span></div>' for n, l in STATS)
     teams = "".join(f'<a class="team-card rv" href="/teams/#{s}"><span class="tc-stage">{esc(st)}</span><strong>{esc(lbl)}</strong><span class="tc-years">Born {esc(yrs)}</span><span class="tc-go">View teams{I["arrow"]}</span></a>' for s, lbl, yrs, st, _ in STAGES)
     body = f"""
-<section class="hero"><div class="hero-bg">{pic('re-crest.png', 'Rebel Elite FC girls at the USYS Presidents Cup', '100vw', eager=True, crop=(16, 9), top=0.15)}</div>
+<section class="hero"><div class="hero-bg">{pic('hero-2025-pc-champs.jpg', 'Rebel Elite 2012 Black — 2025 Presidents Cup U13 state champions, St. George, Utah', '100vw', eager=True, crop=(16, 9), top=0.45)}</div>
 <div class="wrap hero-in"><p class="kicker">Girls' competitive club soccer · St. George, Utah</p>
 <h1>Building individual <em>character</em> through girls' soccer in Southern Utah.</h1>
 <p class="lead">Rebel Elite FC is the girls' program of Ignite FC — two-time Presidents Cup national champions, 24 teams from U8 to U19, and a pathway from Little Valley to college soccer.</p>
@@ -381,7 +381,7 @@ shutil.copy(HERE / "site.css", OUT / "site.css")
 (OUT / "assets").mkdir(exist_ok=True)
 Image.open(IMG / "re-ball-icon.png").convert("RGBA").resize((192, 192), Image.LANCZOS).save(OUT / "assets/icon.png")
 lg = Image.open(IMG / "re-logo-darkpink.png").convert("RGBA"); lg.thumbnail((1200, 1200)); lg.save(OUT / "assets/logo.png")
-og = ImageOps.fit(Image.open(IMG / "re-crest.png").convert("RGB"), (1200, 630), Image.LANCZOS, centering=(0.5, 0.5))
+og = ImageOps.fit(Image.open(IMG / "hero-2025-pc-champs.jpg").convert("RGB"), (1200, 630), Image.LANCZOS, centering=(0.5, 0.5))
 d = ImageDraw.Draw(og, "RGBA"); d.rectangle((0, 0, 1200, 630), fill=(11, 11, 15, 120))
 logo = Image.open(IMG / "re-logo-light.png").convert("RGBA"); logo = logo.resize((720, round(logo.height * 720 / logo.width)), Image.LANCZOS)
 og.paste(logo, ((1200 - logo.width) // 2, (630 - logo.height) // 2), logo); og.save(OUT / "assets/og.jpg", quality=86)
