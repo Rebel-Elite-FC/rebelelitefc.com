@@ -80,19 +80,8 @@ TEAMS = [
 ]
 ALUMNI_TEAMS = [(2006, "Black", "Chris Brown"), (2006, "White", "Adelle Brown"), (2005, "Black", "Chris Brown")]
 
-FEATURED_COACHES = [
-    dict(slug="chris-brown", name="Chris Brown", cred="MBA, PhD · Ignite FC Board", role="Rebel Elite Director & Coach", img="re-coach-chris.jpeg", top=0.2,
-         bio=["Chris has coached club soccer in Southern Utah for more than a decade. He founded the original Rebel Elite teams, brought them into the Ignite FC family in 2023, and has coached Rebel sides to Presidents Cup state titles, a Far West Regional championship, and the national finals.",
-              "Off the field he is an assistant professor of business and entrepreneurship at Utah Tech University and the founder of several companies. He brings the same mindset to coaching: clear standards, individual development plans, and a culture where players own their growth.",
-              "Chris and his wife have six kids — most of whom have worn a Rebel jersey."]),
-    dict(slug="adelle-brown", name="Adelle Brown", cred="Former college goalkeeper", role="Coach & Goalkeeper Training", img="re-coach-adelle.jpeg", top=0.2,
-         bio=["Adelle was ranked #1 in the nation in NJCAA saves and earned first-team all-conference honors at Iowa Lakes Community College before playing at Dixie State University (now Utah Tech), where she earned RMAC honorable mention and helped the team reach the NCAA Division II Elite Eight as region champions.",
-              "She leads Rebel Elite's goalkeeper training — footwork, distribution, shot-stopping, and the mentality the position demands."]),
-]
 
-ADMIN = [("Steven Beckstrom", "Club President, Ignite FC"), ("Holly Yergensen", "Club Registrar"), ("Chris Brown, Landon Cameron, Brandon Ellett, Ryan Forbes, Brian Shelley, Andy Yergensen", "Board of Directors")]
 
-TIERS = [("Bronze", 100), ("Silver", 250), ("Gold", 500), ("Platinum", 1000), ("Hat Trick", 2500), ("World Cup", 5000)]
 
 FAQ_TRYOUTS = [
     ("When are Rebel Elite tryouts?", "Every club in Utah holds tryouts in the same window set by UYSA — the first week of June. Registration opens in the spring on Ollie Sports, and the schedule by age group is posted here and on ignitefc.com. Players can be evaluated year-round if a roster has room."),
@@ -105,7 +94,7 @@ FAQ_TRYOUTS = [
     ("We're from out of town. Can we still try out?", "Yes. Email us your player's name and birthdate and we'll connect you with the right coach or arrange another option."),
 ]
 
-NAV = [("/teams/", "Teams"), ("/tryouts/", "Tryouts"), ("/coaches/", "Coaches"), ("/about/", "About"), ("/sponsors/", "Sponsors"), (ZCC, "Tournament"), ("/contact/", "Contact")]
+NAV = [("/teams/", "Teams"), ("/tryouts/", "Tryouts"), ("/about/", "About"), (ZCC, "Tournament"), ("/contact/", "Contact")]
 
 # ---------------------------------------------------------------- helpers
 def esc(s): return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
@@ -259,7 +248,7 @@ def home():
 <section class="sec"><div class="wrap split">
 <div class="rv"><p class="kicker">Why Rebel Elite</p><h2>Hometown club. National standard.</h2>
 <p>Rebel Elite started so St. George girls didn't have to drive to Las Vegas or Salt Lake for elite soccer. Today our teams win state titles every January and have brought two national championships home to Southern Utah — with coaches who know every player by name and push each one to get better every week.</p>
-<ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper training led by a former college keeper</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Club fee of $195 — tournaments chosen by each team</li></ul>
+<ul class="checks"><li>{I['check']}24 girls' teams, U8 through U19 — a team for every level</li><li>{I['check']}Licensed, background-checked coaches at every session</li><li>{I['check']}Goalkeeper-specific training included</li><li>{I['check']}State Cup, Presidents Cup &amp; showcase tournaments</li><li>{I['check']}Club fee of $195 — tournaments chosen by each team</li></ul>
 <a class="btn btn-line" href="/about/">Our story{I['arrow']}</a></div>
 <figure class="video rv" data-id="{VIDEO_ID}" role="button" tabindex="0" aria-label="Play Rebel Elite FC highlight video">{pic('re-rebel.jpg', 'Rebel Elite FC team with Presidents Cup medals', '(max-width:900px) 100vw, 560px', crop=(16, 9), maxw=1200)}<span class="play">{I['play']}</span></figure>
 </div></section>
@@ -273,10 +262,7 @@ def home():
 {honors_list(4)}
 <a class="btn btn-line" href="/about/#honors">Full honors list{I['arrow']}</a></div></div></section>
 
-<section class="sec"><div class="wrap split"><div class="rv"><p class="kicker">Coaching staff</p><h2>Coaches who've played it and lived it.</h2><p>Twenty-plus Rebel coaches, led by a director who built the program from one team and a goalkeeper coach who played in the NCAA Elite Eight. Every coach is licensed, background-checked, and at every session.</p><a class="btn btn-line" href="/coaches/">Meet the coaches{I['arrow']}</a></div>
-<div class="coach-row rv">{"".join(f'<a class="coach-mini" href="/coaches/#{c["slug"]}">{pic(c["img"], c["name"], "(max-width:700px) 45vw, 260px", crop=(4, 5), maxw=800, top=c["top"])}<strong>{esc(c["name"])}</strong><span>{esc(c["role"])}</span></a>' for c in FEATURED_COACHES)}</div></div></section>
 
-<section class="sec dark sponsor-teaser"><div class="wrap split"><div class="rv"><p class="kicker">Local business?</p><h2>Put your name on a championship team.</h2><p>Sponsorships from $100 to $5,000 keep tournament travel affordable for St. George families — and put your brand in front of thousands of parents across Utah, Nevada, and Arizona.</p><a class="btn btn-pink" href="/sponsors/">Sponsorship tiers{I['arrow']}</a></div><div class="tier-strip rv">{"".join(f'<div><strong>${a:,}</strong><span>{esc(t)}</span></div>' for t, a in TIERS)}</div></div></section>
 {cta_band()}"""
     page("/", "Rebel Elite FC | Girls' Club Soccer in St. George, Utah (U8–U19)",
          "Rebel Elite FC is the girls' program of Ignite FC: competitive club soccer in St. George, Utah for ages U8–U19. Two-time Presidents Cup national champions. Tryouts, fees, teams, and coaches.",
@@ -315,21 +301,11 @@ def tryouts_page():
 <aside class="card rv"><h3>Tryout details</h3><dl class="meta"><div><dt>Who</dt><dd>Girls U8–U19 (born 2007–2018)</dd></div><div><dt>Where</dt><dd>{FIELDS_TRYOUT}, St. George, UT</dd></div><div><dt>When</dt><dd>First week of June each year; times by age group posted each spring</dd></div><div><dt>Cost</dt><dd>Tryouts are free</dd></div><div><dt>Missed it?</dt><dd>Year-round evaluations when rosters have room</dd></div><div><dt>Questions</dt><dd><a href="tel:{TEL}">{PHONE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></dd></div></dl></aside>
 </div></section>
 <section class="sec dark" id="fees"><div class="wrap split"><div class="rv"><p class="kicker">What it costs</p><h2>Straightforward fees. No surprises.</h2><p>Rebel Elite is run by volunteer board members and coaches, so the club fee stays low and every team controls its own tournament budget.</p><a class="btn btn-ghost" href="{FEES_URL}" rel="noopener">Full {SEASON} fee sheet{I['arrow']}</a></div>
-<div class="fees rv"><div><strong>$195</strong><span>Club fee per player<br><small>$163 for high-school players playing one season · includes $40 team equipment fund</small></span></div><div><strong>$220–280</strong><span>UYSA registration<br><small>Paid directly to UYSA; varies by age</small></span></div><div><strong>$197 / $214</strong><span>adidas Rebel kit (youth / adult)<br><small>2 jerseys, 2 socks, training top · replaced every two years · <a href="{STORE_KIT}" rel="noopener">soccer.com</a></small></span></div><div><strong>Varies</strong><span>Tournaments &amp; travel<br><small>Chosen and funded by each team · offset by <a href="/sponsors/">sponsors</a></small></span></div></div></div></section>
+<div class="fees rv"><div><strong>$195</strong><span>Club fee per player<br><small>$163 for high-school players playing one season · includes $40 team equipment fund</small></span></div><div><strong>$220–280</strong><span>UYSA registration<br><small>Paid directly to UYSA; varies by age</small></span></div><div><strong>$197 / $214</strong><span>adidas Rebel kit (youth / adult)<br><small>2 jerseys, 2 socks, training top · replaced every two years · <a href="{STORE_KIT}" rel="noopener">soccer.com</a></small></span></div><div><strong>Varies</strong><span>Tournaments &amp; travel<br><small>Chosen and funded by each team · often offset by local sponsors</small></span></div></div></div></section>
 <section class="sec"><div class="wrap narrow rv"><p class="kicker">Missed tryouts?</p><h2>We evaluate players year-round.</h2><p>Rosters have room more often than you'd think, especially in younger age groups. Email us your player's birth year and experience and we'll set up a training evaluation with the right team. Out of town? Send a name and birthdate and we'll connect you with a coach.</p><a class="btn btn-pink" href="mailto:{EMAIL}?subject=Player%20evaluation">Request an evaluation{I['arrow']}</a></div></section>""" + faq + cta_band()
     page("/tryouts/", f"Girls' Soccer Tryouts & Club Fees, St. George Utah | Rebel Elite FC {SEASON}", f"Rebel Elite FC girls' soccer tryouts in St. George, Utah: ages U8–U19, held each June at Sullivan Soccer Complex, free to attend. {SEASON} club fees, kit, and year-round evaluations.",
          body, "/tryouts/", [ld, fld])
 
-def coaches_page():
-    head, ld = pagehead([("/", "Home"), ("/coaches/", "Coaches")], "Coaching staff", "Coaches who demand more — and give more.", "Every Rebel Elite coach is licensed, background-checked, and at every session.")
-    cards = "".join(f"""<article class="coach rv" id="{c['slug']}"><figure>{pic(c['img'], c['name'], '(max-width:800px) 100vw, 380px', crop=(4, 5), maxw=900, top=c['top'])}</figure>
-<div><p class="kicker">{esc(c['role'])}</p><h2>{esc(c['name'])}{f'<small>{esc(c["cred"])}</small>' if c['cred'] else ''}</h2>{"".join(f'<p>{esc(p)}</p>' for p in c['bio'])}</div></article>""" for c in FEATURED_COACHES)
-    staff = '<ul class="staff">' + "".join(f'<li class="rv"><strong>{esc(co)}</strong><span>Rebel Elite {y} {c}</span></li>' for y, c, co in TEAMS if co != "Coach TBA") + "</ul>"
-    admin = '<ul class="staff">' + "".join(f'<li><strong>{esc(n)}</strong><span>{esc(r)}</span></li>' for n, r in ADMIN) + "</ul>"
-    lds = [{"@context": "https://schema.org", "@type": "Person", "name": c["name"], "jobTitle": c["role"], "worksFor": {"@id": DOMAIN + "/#org"}, "url": DOMAIN + "/coaches/#" + c["slug"]} for c in FEATURED_COACHES]
-    body = head + f'<section class="sec"><div class="wrap">{cards}</div></section><section class="sec dark" id="staff"><div class="wrap"><p class="kicker">{SEASON} team coaches</p><h2>The Rebel coaching staff.</h2>{staff}</div></section><section class="sec" id="admin"><div class="wrap narrow"><p class="kicker">Club leadership</p><h2>Ignite FC administration.</h2>{admin}</div></section>'
-    page("/coaches/", "Our Coaches | Rebel Elite FC Girls' Soccer, St. George UT", "Meet the Rebel Elite FC coaching staff — licensed club soccer coaches developing girls U8–U19 in St. George, Utah, led by director Chris Brown and goalkeeper coach Adelle Brown.",
-         body + cta_band("Want to coach with us?", "We're always looking for licensed coaches who care about kids.", "Email the director", f"mailto:{EMAIL}?subject=Coaching"), "/coaches/", [ld] + lds)
 
 def about_page():
     head, ld = pagehead([("/", "Home"), ("/about/", "About")], "Our story", "Southern Utah's rebel club.", "Started so St. George girls didn't have to drive to Las Vegas or Salt Lake for elite soccer. Now a two-time national champion.", "re-rebel.jpg", "Rebel Elite FC team", 0.3)
@@ -351,22 +327,13 @@ def about_page():
     page("/about/", "About Rebel Elite FC | Girls' Soccer Club in St. George, Utah", "The story of Rebel Elite FC, the girls' program of Ignite FC in St. George, Utah: founded 2018, two Presidents Cup national championships, state titles every year, and a college pathway.",
          body, "/about/", [ld])
 
-def sponsors_page():
-    head, ld = pagehead([("/", "Home"), ("/sponsors/", "Sponsors")], "Sponsor a team", "Back the Rebels.", "Your sponsorship keeps tournament travel affordable for St. George families and puts your business in front of thousands of soccer parents.")
-    tiers = "".join(f'<div class="tier rv{" hot" if a == 500 else ""}"><span class="t-name">{esc(t)}</span><strong>${a:,}</strong><a class="btn {"btn-pink" if a == 500 else "btn-line"}" href="{SPONSOR_URL}">Sponsor{I["arrow"]}</a></div>' for t, a in TIERS)
-    body = head + f"""
-<section class="sec"><div class="wrap narrow prose rv"><h2>Where the money goes</h2><p>100% of sponsorships go directly to the team you choose — hotels, transportation, food, and tournament fees. Rebel Elite is run by volunteer board members and coaches, not a corporate front office, so every dollar lands on the field. Our 2025 national champions got to the final the same way: car washes, raffles, and local sponsors.</p>
-<h2>What sponsors get</h2><ul class="checks"><li>{I['check']}Logo on team warm-ups and on rebelelitefc.com</li><li>{I['check']}Shout-outs on Rebel Elite social media (Instagram &amp; Facebook)</li><li>{I['check']}Banner at home matches and at the Zion Champions Cup</li><li>{I['check']}A thank-you from the team — and a receipt for your records</li></ul></div></section>
-<section class="sec dark"><div class="wrap"><p class="kicker">Sponsorship tiers</p><h2>Pick a level.</h2><div class="tiers">{tiers}</div><p class="center small">Prefer to sponsor a specific player or donate another amount? <a href="mailto:{EMAIL}">Email us</a> or call <a href="tel:{TEL}">{PHONE}</a>.</p></div></section>""" + cta_band("Questions about sponsoring?", "We'll send you the sponsor deck and a receipt the same day.", "Email soccer@rebelelitefc.com", f"mailto:{EMAIL}")
-    page("/sponsors/", "Sponsor Rebel Elite FC | Girls' Soccer Sponsorships, St. George UT", "Sponsor a Rebel Elite FC girls' soccer team in St. George, Utah. Tiers from $100 to $5,000 fund tournament travel and put your business in front of local families.",
-         body, "/sponsors/", [ld])
 
 def contact_page():
     head, ld = pagehead([("/", "Home"), ("/contact/", "Contact")], "Contact", "Get in touch.", "Tryouts, evaluations, sponsorships, or just a question — we answer every message.")
     body = head + f"""
 <section class="sec"><div class="wrap split">
 <div class="rv"><div class="contact-list"><a href="tel:{TEL}">{I['phone']}<span><strong>Call or text</strong>{PHONE}</span></a><a href="mailto:{EMAIL}">{I['mail']}<span><strong>Email</strong>{EMAIL}</span></a><a href="https://www.google.com/maps/search/?api=1&query=Sullivan+Soccer+Complex+St+George+UT" rel="noopener">{I['pin']}<span><strong>Tryouts &amp; training</strong>{FIELDS_TRYOUT} · Little Valley, {CITY}, {STATE}</span></a><a href="{INSTAGRAM}" rel="noopener">{I['ig']}<span><strong>Instagram</strong>@rebelelitefc</span></a></div></div>
-<aside class="card rv"><h3>Quick links</h3><a class="btn btn-pink" href="{TRYOUTS_URL}" rel="noopener">Register for Tryouts{I['arrow']}</a><a class="btn btn-line" href="mailto:{EMAIL}?subject=Player%20evaluation">Request an evaluation</a><a class="btn btn-line" href="/sponsors/">Sponsor a team</a><a class="btn btn-line" href="{STORE_KIT}" rel="noopener">Order the Rebel kit</a></aside></div></section>
+<aside class="card rv"><h3>Quick links</h3><a class="btn btn-pink" href="{TRYOUTS_URL}" rel="noopener">Register for Tryouts{I['arrow']}</a><a class="btn btn-line" href="mailto:{EMAIL}?subject=Player%20evaluation">Request an evaluation</a><a class="btn btn-line" href="mailto:{EMAIL}?subject=Sponsoring%20Rebel%20Elite%20FC">Sponsor a team</a><a class="btn btn-line" href="{STORE_KIT}" rel="noopener">Order the Rebel kit</a></aside></div></section>
 <section class="map"><iframe title="Sullivan Soccer Complex map" src="https://www.google.com/maps?q=Sullivan+Soccer+Complex,+St.+George,+UT&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></section>"""
     page("/contact/", "Contact Rebel Elite FC | St. George, Utah Girls' Soccer Club", f"Contact Rebel Elite FC girls' soccer club in St. George, Utah: call or text {PHONE}, email {EMAIL}, or find us at {FIELDS_TRYOUT}.", body, "/contact/", [ld])
 
@@ -382,13 +349,13 @@ def sitemap_page():
     head, ld = pagehead([("/", "Home"), ("/sitemap/", "Sitemap")], "Sitemap", "Every page on our site.")
     page("/sitemap/", "Sitemap | Rebel Elite FC", "All pages on rebelelitefc.com.", head + f'<section class="sec"><div class="wrap narrow prose"><ul>{links}</ul></div></section>', None, [ld])
 
-home(); teams_page(); tryouts_page(); coaches_page(); about_page(); sponsors_page(); contact_page(); legal_pages(); sitemap_page()
+home(); teams_page(); tryouts_page(); about_page(); contact_page(); legal_pages(); sitemap_page()
 
 # ---------------------------------------------------------------- redirects (old WordPress URLs)
 REDIRECTS = {
     "/tournaments/": "/teams/", "/rebels-at-nationals/": "/about/#honors", "/rebel-elite-fc-2006-presidents-cup/": "/about/#honors",
-    "/2024-2025-sponsorships/": "/sponsors/", "/raffle/": "/sponsors/", "/shop/": STORE_FAN, "/product/rebel-elite-fc-unisex-hoodie/": STORE_FAN,
-    "/cart/": "/", "/checkout/": "/", "/my-account/": "/", "/payment-confirmation/": "/", "/payment-failed/": "/", "/hello-world/": "/", "/coaches-2/": "/coaches/",
+    "/2024-2025-sponsorships/": "/contact/", "/raffle/": "/contact/", "/sponsors/": "/contact/", "/coaches/": "/about/", "/shop/": STORE_FAN, "/product/rebel-elite-fc-unisex-hoodie/": STORE_FAN,
+    "/cart/": "/", "/checkout/": "/", "/my-account/": "/", "/payment-confirmation/": "/", "/payment-failed/": "/", "/hello-world/": "/", "/coaches-2/": "/about/",
 }
 def redirect(to):
     canon = to if to.startswith("http") else DOMAIN + to.split("#")[0]
