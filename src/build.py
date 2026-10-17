@@ -68,18 +68,18 @@ STAGES = [  # (slug, label, birth years, stage, blurb)
     ("u17-u19", "U17 – U19", "2008 – 2010", "College pathway", "Our oldest teams play State Cup, Presidents Cup, and college showcases — the same path our 2023 and 2025 national champions took — with recruiting guidance and film."),
 ]
 
-# Rebel Elite teams as listed on ignitefc.com/teams (birth year, color, head coach)
+# Rebel Elite teams as listed on ignitefc.com/teams (birth year, color)
 TEAMS = [
-    (2007, "Black", "Matt Hafen"), (2007, "White", "Mark Weston"), (2008, "Black", "Mark Weston"),
-    (2009, "Black", "Jon Armour"), (2009, "White", "Cody Alexander"), (2009, "Pink", "Holly Yergensen"),
-    (2010, "Black", "Breck McArthur"), (2010, "White", "Matthew Woolley"), (2011, "Black", "Kendal Nani"),
-    (2012, "Black", "Landon Cameron"), (2012, "White", "Kat Esplin"), (2012, "Pink", "Kyle Parkhurst"),
-    (2013, "Black", "Wes Davis"), (2013, "White", "McGarren Flack"), (2014, "Black", "Trish Barker"),
-    (2015, "Black", "Steven Cruz"), (2015, "White", "Jaycee Lambert"),
-    (2016, "Black", "Brooke Blaser"), (2016, "White", "Tom Knudsen"), (2016, "Pink", "Coach TBA"),
-    (2017, "Black", "Coach TBA"), ("2017/18", "White", "Coach TBA"),
+    (2007, "Black"), (2007, "White"), (2008, "Black"),
+    (2009, "Black"), (2009, "White"), (2009, "Pink"),
+    (2010, "Black"), (2010, "White"), (2011, "Black"),
+    (2012, "Black"), (2012, "White"), (2012, "Pink"),
+    (2013, "Black"), (2013, "White"), (2014, "Black"),
+    (2015, "Black"), (2015, "White"),
+    (2016, "Black"), (2016, "White"), (2016, "Pink"),
+    (2017, "Black"), ("2017/18", "White"),
 ]
-ALUMNI_TEAMS = [(2006, "Black", "Chris Brown"), (2006, "White", "Adelle Brown"), (2005, "Black", "Chris Brown")]
+ALUMNI_TEAMS = [(2006, "Black"), (2006, "White"), (2005, "Black")]
 
 
 
@@ -244,7 +244,7 @@ def home():
     stats = "".join(f'<div class="stat rv"><strong>{esc(n)}</strong><span>{esc(l)}</span></div>' for n, l in STATS)
     teams = "".join(f'<a class="team-card rv" href="/teams/#{s}"><span class="tc-stage">{esc(st)}</span><strong>{esc(lbl)}</strong><span class="tc-years">Born {esc(yrs)}</span><span class="tc-go">View teams{I["arrow"]}</span></a>' for s, lbl, yrs, st, _ in STAGES)
     body = f"""
-<section class="hero"><div class="hero-bg">{pic('ig-hero.jpg', 'Rebel Elite FC 2012, 2010 and 2007 girls — 2026 Presidents Cup state champions', '100vw', eager=True, crop=(16, 9), top=0.5)}</div>
+<section class="hero"><div class="hero-bg">{pic('re-crest.png', 'Rebel Elite FC girls at the USYS Presidents Cup', '100vw', eager=True, crop=(16, 9), top=0.15)}</div>
 <div class="wrap hero-in"><p class="kicker">Girls' competitive club soccer · St. George, Utah</p>
 <h1>Building individual <em>character</em> through girls' soccer in Southern Utah.</h1>
 <p class="lead">Rebel Elite FC is the girls' program of Ignite FC — two-time Presidents Cup national champions, 24 teams from U8 to U19, and a pathway from Little Valley to college soccer.</p>
@@ -279,15 +279,16 @@ def teams_page():
     head, ld = pagehead([("/", "Home"), ("/teams/", "Teams")], "Age groups & teams", "Girls' soccer teams, U8 to U19.", f"Twenty-four Rebel Elite teams train in St. George and compete in UYSA leagues, cups, and regional tournaments. Here's what to expect at each stage in {SEASON}.", "ig-hero.jpg", "Rebel Elite FC teams", 0.5)
     def teams_for(yrs):
         lo, hi = yrs
-        rows = [(y, c, co) for y, c, co in TEAMS if lo <= int(str(y)[:4]) <= hi]
+        rows = [(y, c) for y, c in TEAMS if lo <= int(str(y)[:4]) <= hi]
         if not rows: return ""
-        return '<ul class="roster">' + "".join(f'<li><strong>Rebel Elite {y} {c}</strong><span>{esc(co)}</span></li>' for y, c, co in rows) + "</ul>"
+        return '<ul class="roster">' + "".join(f'<li><strong>Rebel Elite {y} {c}</strong></li>' for y, c in rows) + "</ul>"
     ranges = {"u8-u10": (2017, 2018), "u11-u12": (2015, 2016), "u13-u14": (2013, 2014), "u15-u16": (2011, 2012), "u17-u19": (2007, 2010)}
     secs = "".join(f"""<article class="team-sec rv" id="{s}"><div class="ts-head"><span class="tc-stage">{esc(st)}</span><h2>{esc(lbl)} Girls</h2><p class="ts-years">Birth years {esc(yrs)}</p></div><div class="ts-body"><p>{esc(b)}</p>
 <h3 class="h-small">{SEASON} teams</h3>{teams_for(ranges[s])}
+<p class="small">Coaches for each team are announced after tryouts. Contact the club for your team's coach.</p>
 <dl class="meta"><div><dt>Training</dt><dd>Usually two nights a week · {FIELDS_TRAIN}</dd></div><div><dt>Games</dt><dd>Fall &amp; spring UYSA seasons, 8–15 games each · mostly at the {FIELDS_GAMES}</dd></div></dl>
 <a class="btn btn-pink" href="/tryouts/">Tryouts &amp; fees{I['arrow']}</a></div></article>""" for s, lbl, yrs, st, b in STAGES)
-    alumni = '<ul class="roster">' + "".join(f'<li><strong>Rebel Elite {y} {c}</strong><span>{esc(co)}</span></li>' for y, c, co in ALUMNI_TEAMS) + "</ul>"
+    alumni = '<ul class="roster">' + "".join(f'<li><strong>Rebel Elite {y} {c}</strong></li>' for y, c in ALUMNI_TEAMS) + "</ul>"
     faq, fld = faq_block([("Which team will my daughter be placed on?", "Placement is by age group first, then by tryout evaluation. Black is typically the top team in an age group, followed by White and Pink. Players may be invited to play up when it is right for their development."),
                           ("Can teams play across age groups?", "Under the new school-year alignment, teams are not forced to split, but most players will play in the older of two possible groups. Play-down exceptions are reviewed case by case and granted for one year only."),
                           ("Do you have boys' teams?", "Boys play for Ignite FC, our parent club, under the same coaching philosophy. Visit ignitefc.com."),
@@ -382,7 +383,7 @@ shutil.copy(HERE / "site.css", OUT / "site.css")
 (OUT / "assets").mkdir(exist_ok=True)
 Image.open(IMG / "re-ball-icon.png").convert("RGBA").resize((192, 192), Image.LANCZOS).save(OUT / "assets/icon.png")
 lg = Image.open(IMG / "re-logo-darkpink.png").convert("RGBA"); lg.thumbnail((1200, 1200)); lg.save(OUT / "assets/logo.png")
-og = ImageOps.fit(Image.open(IMG / "ig-hero.jpg").convert("RGB"), (1200, 630), Image.LANCZOS, centering=(0.5, 0.5))
+og = ImageOps.fit(Image.open(IMG / "re-crest.png").convert("RGB"), (1200, 630), Image.LANCZOS, centering=(0.5, 0.5))
 d = ImageDraw.Draw(og, "RGBA"); d.rectangle((0, 0, 1200, 630), fill=(11, 11, 15, 120))
 logo = Image.open(IMG / "re-logo-light.png").convert("RGBA"); logo = logo.resize((720, round(logo.height * 720 / logo.width)), Image.LANCZOS)
 og.paste(logo, ((1200 - logo.width) // 2, (630 - logo.height) // 2), logo); og.save(OUT / "assets/og.jpg", quality=86)
